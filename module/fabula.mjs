@@ -105,14 +105,18 @@ Hooks.once('init', async () => {
 	CONFIG.specialStatusEffects.DEFEATED = 'defeated';
 
 	// Register Sheets
-	Actors.unregisterSheet('core', ActorSheet);
-	Actors.registerSheet('fabula', FabulaActorSheet, {
+	foundry.documents.collections.Actors.unregisterSheet('core', foundry.appv1.sheets.ActorSheet);
+	foundry.documents.collections.Actors.registerSheet('fabula', FabulaActorSheet, {
 		makeDefault: true,
 	});
-	Items.unregisterSheet('core', ItemSheet);
-	Items.registerSheet('fabula', FabulaItemSheet, {
+	foundry.documents.collections.Items.unregisterSheet('core', foundry.appv1.sheets.ItemSheet);
+	foundry.documents.collections.Items.registerSheet('fabula', FabulaItemSheet, {
 		makeDefault: true,
 	});
+
+	if (game.release.version < 14) {
+        CONFIG.compatibility.excludePatterns.push(new RegExp("The V1 Application framework is deprecated"));
+    }
 
 	return preloadPartialTemplates();
 
@@ -129,33 +133,45 @@ Hooks.once('ready', async function () {
 
 });
 
-Hooks.on('renderPause', (app, [html]) => {
-	// Change pause image
-	html.classList.add("fabula");
-	const img = html.querySelector("img");
-	img.src = "systems/fabula/assets/icons/icon-fabula.svg";
-	img.className = "";
+// Change default GamePause image
+Hooks.on('renderGamePause', (application, element, context, options) => {
+	element.classList.add("fabula");
+	const image = element.querySelector("img");
+	image.src = 'systems/fabula/assets/icons/icon-fabula.svg';
 });
 
 Hooks.on('getSceneControlButtons', (controls) => {
+
 	// Add clock button
-	controls.push({
+	controls.clock = {
 		name: 'clock',
 		title: 'CONTROLS.GroupClock',
 		icon: 'fa-solid fa-stopwatch',
-		layer: 'controls',
-		activeTool: 'create-clock',
+		layer: 'clock',
+		order: 11,
 		visible: true,
-		tools: [
-			{
-				name: 'create-clock',
+		activeTool: 'hidden',
+		// onChange: (event, active) => {},
+		// onToolChange: (event, tool) => {},
+		tools: {
+			hidden: {
+				name: 'hidden',
+				icon: 'fa-solid fa-stopwatch',
+				visible: true,
+				order: 0,
+			},
+			create: {
+				name: 'create',
 				title: 'CONTROLS.CreateClock',
 				icon: 'fa-solid fa-plus-circle',
+				visible: true,
+				order: 1,
 				button: true,
-				onClick: () => openClockDialog(),
+				onChange: (event, active) => openClockDialog(),
 			}
-		]
-	});
+		},
+	};
+
 });
 
 Hooks.on('renderJournalPageSheet', async (app, html, data) => {
@@ -497,14 +513,14 @@ Hooks.on('preCreateActiveEffect', (effect, options, userId) => {
 	return true;
 });
 
-Hooks.on('renderChatMessage', (message, html, data) => {
+Hooks.on('renderChatMessageHTML', (message, html, data) => {
 	const customClass = message.flags.customClass;
 	if ( customClass ) {
-		html[0].classList.add(customClass);
+		$(html).addClass(customClass);
 	}
 
 	// Full rest
-	html.on('click', '.js_actorFullRest', async (e) => {
+	$(html).on('click', '.js_actorFullRest', async (e) => {
 		e.preventDefault();
 		const actor = game.user.character;
 		if ( actor ) {
@@ -513,7 +529,7 @@ Hooks.on('renderChatMessage', (message, html, data) => {
 	});
 
 	// Give exp for end of session
-	html.on('click', '.js_receiveSessionEndEXP', async (e) => {
+	$(html).on('click', '.js_receiveSessionEndEXP', async (e) => {
 		e.preventDefault();
 		const element = e.currentTarget;
 		const exp = Number(element.dataset.exp) || 0;
@@ -527,7 +543,7 @@ Hooks.on('renderChatMessage', (message, html, data) => {
 	});
 
 	// Add Bond bonus to Roll
-	html.on('click', '.js_addRollBondBonus', async (e) => {
+	$(html).on('click', '.js_addRollBondBonus', async (e) => {
 		e.preventDefault();
 		const element = e.currentTarget;
 		let rollFormula = element.dataset.formula;
@@ -612,7 +628,7 @@ Hooks.on('renderChatMessage', (message, html, data) => {
 	});
 
 	// Reroll dice
-	html.on('click', '.js_rerollDice', async (e) => {
+	$(html).on('click', '.js_rerollDice', async (e) => {
 		e.preventDefault();
 		const element = e.currentTarget;
 		const rollFormula = element.dataset.formula;

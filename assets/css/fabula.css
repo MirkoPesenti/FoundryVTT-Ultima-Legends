@@ -350,9 +350,9 @@ body {
 .fabula-autocomplete-suggestions .fabula-autocomplete-item:hover {background-color:rgba(var(--fu-color-primary-rgb),.3);}
 
 /* UI > Pause */
-.fabula#pause {background:none;animation:pauseAnimation 3s infinite ease-in-out;}
-/* .fabula#pause img {opacity: 0.75;} */
-.fabula#pause figcaption {text-shadow:0px 0px 13px rgba(255, 255, 255, 0.2);font-weight:700;padding:0;margin:0;font-family:CreditValley;font-size:50px;background:linear-gradient(0deg, rgba(0,109,155,1) 0%, rgba(0,109,155,1) 30%, rgba(7,86,166,1) 45%, rgba(146,213,247,1) 60%, rgba(146,213,247,1) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.fabula#pause {gap:0;animation:pauseAnimation 4s infinite ease-in-out;}
+.fabula#pause img {animation:none;}
+.fabula#pause figcaption {text-shadow:0px 0px 13px rgba(255, 255, 255, 0.2);font-weight:700;padding:0;margin:0;font-family:CreditValley;font-size:50px;background:linear-gradient(0deg, rgba(0,109,155,1) 0%, rgba(0,109,155,1) 30%, rgba(7,86,166,1) 45%, rgba(146,213,247,1) 60%, rgba(146,213,247,1) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:0;line-height:1;}
 @keyframes pauseAnimation {
 	0% {filter:drop-shadow(0 0 0 rgba(255, 255, 255, 0));}
 	50% {filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.5));}
@@ -373,6 +373,7 @@ body {
 .fabula.container-clock .clock-section {width:100%;height:30px;margin-bottom:10px;background-color:var(--fu-color-white);}
 .fabula.container-clock .clock-section:hover {background-color:var(--fu-color-primary);opacity:.6s;}
 .fabula.container-clock .clock-section.completed {background-color:var(--fu-color-primary);}
+.fabula.container-clock .clock-section.clickable {cursor:pointer;}
 .fabula.container-clock .clock-label {display:flex;align-items:center;}
 .fabula.container-clock .clock-label .btn {pointer-events:all;}
 .fabula.container-clock .clock-label h4 {margin:0 5px;pointer-events:all;}

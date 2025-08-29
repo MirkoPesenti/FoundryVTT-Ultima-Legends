@@ -66,10 +66,25 @@ export function renderClock( clock ) {
 	let clockSections = Math.floor( 360 / clock.sections.length );
 	let clockDEG = 0;
 	clock.sections.forEach((full, index) => {
+		const clickIndex = index + 1;
 		const section = document.createElement('div');
 		$(section)
 			.addClass('clock-section')
-			.attr('data-index', index);
+			.attr('data-index', clickIndex);
+
+		if ( clockProgress !== clickIndex ) {
+			$(section).addClass('clickable');
+			$(section).on('click', (e) => {
+				e.preventDefault();
+				if ( clockProgress < clickIndex ) {
+					addSectionToClock( clock, clickIndex - clockProgress );
+				} else {
+					removeSectionToClock( clock, clockProgress - clickIndex );
+				}
+			});
+		} else {
+			$(section).removeClass('clickable');
+		}
 
 		if ( full ) {
 			$(section).addClass('completed');

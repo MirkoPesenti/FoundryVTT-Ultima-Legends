@@ -171,7 +171,7 @@ async function addClassFeature( sourceClass, actor, featureItem = null ) {
 							</span>
 				`;
 			}
-			const enrichedDescription = await TextEditor.enrichHTML( skill.system.description ?? '' );
+			const enrichedDescription = await foundry.applications.ux.TextEditor.enrichHTML( skill.system.description ?? '' );
 			skillOptions += `
 							<span class="max">
 								(<span>l</span> ${skillMaxLevel})

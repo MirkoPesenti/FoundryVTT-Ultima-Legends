@@ -5,10 +5,10 @@ import { AlchemyListeners } from "../documents/items/classFeatures/tinkerer/alch
 
 /**
  * Extend basic ItemSheet
- * @extends {ItemSheet}
+ * @extends {foundry.appv1.sheets.ItemSheet}
  */
 
-export class FabulaItemSheet extends ItemSheet {
+export class FabulaItemSheet extends foundry.appv1.sheets.ItemSheet {
 
 	static MODES = {
 		PLAY: 1,
@@ -188,7 +188,7 @@ export class FabulaItemSheet extends ItemSheet {
 			context.embeddedFeatures = features;
 			for ( const feature of context.embeddedFeatures ) {
 				feature.enrichedHtml = {
-					description: await TextEditor.enrichHTML( feature.system.description ?? '' ),
+					description: await foundry.applications.ux.TextEditor.enrichHTML( feature.system.description ?? '' ),
 				};
 			}
 		}
@@ -204,7 +204,7 @@ export class FabulaItemSheet extends ItemSheet {
 					// HTMLField
 					const propertyPath = currentPath.join('.');
 					const value = foundry.utils.getProperty(context.system, propertyPath);
-					context.enrichedHtml[propertyPath] = await TextEditor.enrichHTML( value ?? '' );
+					context.enrichedHtml[propertyPath] = await foundry.applications.ux.TextEditor.enrichHTML( value ?? '' );
 
 				} else if ( field instanceof foundry.data.fields.SchemaField ) {
 
@@ -241,7 +241,7 @@ export class FabulaItemSheet extends ItemSheet {
 		context.allEffects = [...context.effects.temporary.effects, ...context.effects.passive.effects, ...context.effects.inactive.effects];
 
 		for ( const effect of context.allEffects ) {
-			effect.enrichedDescription = effect.description ? await TextEditor.enrichHTML(effect.description) : '';
+			effect.enrichedDescription = effect.description ? await foundry.applications.ux.TextEditor.enrichHTML(effect.description) : '';
 		}
 
 		context.FU = FU;
@@ -591,8 +591,8 @@ export class FabulaItemSheet extends ItemSheet {
 				// Enriches description fields
 				for ( let item of context.flags.fabula.subItems ) {
 					item.enrichedHtml = {
-						description: await TextEditor.enrichHTML( item.system?.description ?? '' ),
-						opportunity: await TextEditor.enrichHTML( item.system?.opportunityEffect ?? '' ),
+						description: await foundry.applications.ux.TextEditor.enrichHTML( item.system?.description ?? '' ),
+						opportunity: await foundry.applications.ux.TextEditor.enrichHTML( item.system?.opportunityEffect ?? '' ),
 					};
 				}
 

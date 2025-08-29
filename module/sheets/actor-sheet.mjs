@@ -17,10 +17,10 @@ function isDualWieldable( actor, item ) {
 
 /**
  * Extend basic ActorSheet
- * @extends {ActorSheet}
+ * @extends {foundry.appv1.sheets.ActorSheet}
  */
 
-export class FabulaActorSheet extends ActorSheet {
+export class FabulaActorSheet extends foundry.appv1.sheets.ActorSheet {
 
 	static MODES = {
 		PLAY: 1,
@@ -30,8 +30,8 @@ export class FabulaActorSheet extends ActorSheet {
 
 	static get defaultOptions() {
 		return foundry.utils.mergeObject(super.defaultOptions, {
-			classes: ['fabula', 'sheet', 'actor', 'backgroundstyle'],
 			width: 700,
+			classes: ['fabula', 'sheet', 'actor'],
 			tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'base', }],
 		});
 	}
@@ -153,8 +153,8 @@ export class FabulaActorSheet extends ActorSheet {
 		}
 
 		context.enrichedHtml = {
-			summary: await TextEditor.enrichHTML( context.system.summary ?? '' ),
-			description: await TextEditor.enrichHTML( context.system.description ?? '' ),
+			summary: await foundry.applications.ux.TextEditor.enrichHTML( context.system.summary ?? '' ),
+			description: await foundry.applications.ux.TextEditor.enrichHTML( context.system.description ?? '' ),
 		};
 		
 		context.rollData = context.actor.getRollData();
@@ -163,7 +163,7 @@ export class FabulaActorSheet extends ActorSheet {
 		context.allEffects = [...context.effects.temporary.effects, ...context.effects.passive.effects, ...context.effects.inactive.effects];
 
 		for ( const effect of context.allEffects ) {
-			effect.enrichedDescription = effect.description ? await TextEditor.enrichHTML(effect.description) : '';
+			effect.enrichedDescription = effect.description ? await foundry.applications.ux.TextEditor.enrichHTML(effect.description) : '';
 		}
 
 		context.FU = FU;
@@ -173,7 +173,7 @@ export class FabulaActorSheet extends ActorSheet {
 
 	async _onDrop(e) {
 		e.preventDefault();
-		const data = TextEditor.getDragEventData(e);
+		const data = foundry.applications.ux.TextEditor.getDragEventData(e);
 		const actor = this.actor;
 
 		if ( data.type == 'Item' ) {
@@ -857,7 +857,8 @@ export class FabulaActorSheet extends ActorSheet {
 		});
 
 		// Init ContextMenu item settings
-		new ContextMenu(html, '.btn-action-options', contextMenuItemSettings, {
+		new foundry.applications.ux.ContextMenu(html[0], '.btn-action-options', contextMenuItemSettings, {
+			jQuery: true,
 			eventName: 'click',
 			onOpen: (menu) => {
 				setTimeout(() => {
@@ -907,8 +908,8 @@ export class FabulaActorSheet extends ActorSheet {
 			// Enriches description fields
 			for ( let item of actor.items ) {
 				item.enrichedHtml = {
-					description: await TextEditor.enrichHTML( item.system?.description ?? '' ),
-					opportunityEffect: await TextEditor.enrichHTML( item.system?.opportunityEffect ?? '' ),
+					description: await foundry.applications.ux.TextEditor.enrichHTML( item.system?.description ?? '' ),
+					opportunityEffect: await foundry.applications.ux.TextEditor.enrichHTML( item.system?.opportunityEffect ?? '' ),
 				};
 			}
 
@@ -917,7 +918,7 @@ export class FabulaActorSheet extends ActorSheet {
 			// 	for ( let [namespace, values] of Object.entries(i.flags.fabula) ) {
 			// 		for ( let [key, value] of Object.entries(values) ) {
 			// 			value.enrichedHtml = {
-			// 				description: await TextEditor.enrichHTML( value.system?.description ?? '' ),
+			// 				description: await foundry.applications.ux.TextEditor.enrichHTML( value.system?.description ?? '' ),
 			// 			}
 			// 		}
 			// 	}

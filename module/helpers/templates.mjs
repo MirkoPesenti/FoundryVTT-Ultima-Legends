@@ -4,7 +4,7 @@
  */
 
 export const preloadPartialTemplates = async function() {
-    return loadTemplates([
+    return foundry.applications.handlebars.loadTemplates([
 
         // Actors
         'systems/fabula/templates/actors/common/arcanum-list-item.hbs',
