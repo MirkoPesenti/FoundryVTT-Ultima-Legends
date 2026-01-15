@@ -8,4 +8,4 @@ This repository's source code is subject to the terms of the [MIT License](https
 
 Fabula Ultima is a roleplaying game created by Emanuele Galletto and published by [Need Games](https://www.needgames.it/). Fabula Ultima is © Need Games and Rooster Games.
 
-![Fabula Ultima Mod](https://github.com/MirkoPesenti/FoundryVTT-Ultima-Legends/blob/main/assets/img/ui/fabula-ultima-mod.png?raw=true){width=300}
+![Fabula Ultima Mod](https://github.com/MirkoPesenti/FoundryVTT-Ultima-Legends/blob/main/assets/img/ui/fabula-ultima-mod.png?raw=true)
