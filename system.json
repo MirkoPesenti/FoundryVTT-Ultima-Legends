@@ -1,8 +1,8 @@
 {
   "id": "fabula",
-  "title": "Fabula Ultima TTJRPG (Unofficial)",
+  "title": "Ultima Legends",
   "description": "An Unofficial system for playing Fabula Ultima in the Foundry Virtual Tabletop environment.",
-  "version": "0.1.2a",
+  "version": "0.1.2b",
   "authors": [
     {
       "name": "OmegaPrime",
@@ -248,7 +248,7 @@
   "background": "systems/fabula/assets/img/ui/fabula-background.webp",
   "socket": true,
   "readme": "README.md",
-  "url": "https://github.com/MirkoPesenti/foundryvtt-fabula-ultima-ttjrpg-unoffical",
-  "manifest": "https://raw.githubusercontent.com/MirkoPesenti/foundryvtt-fabula-ultima-ttjrpg-unoffical/master/system.json",
-  "download": "https://github.com/MirkoPesenti/foundryvtt-fabula-ultima-ttjrpg-unoffical/archive/master.zip"
+  "url": "https://github.com/MirkoPesenti/FoundryVTT-Ultima-Legends",
+  "manifest": "https://raw.githubusercontent.com/MirkoPesenti/FoundryVTT-Ultima-Legends/master/system.json",
+  "download": "https://github.com/MirkoPesenti/FoundryVTT-Ultima-Legends/archive/master.zip"
 }
